@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/user.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>SVG</h2>
+          <h4>Coordinates, Basic Shapes, Animations</h4>
+        </section>
+
+        <section>
+          <section>
+            <h5>Introduction</h5>
+          </section>
+          <section>
+            <h6>Types of graphics</h6>
+            <table class="graphic-types">
+              <tr class="graphic-types-header">
+                <td>Raster</td>
+                <td>Vector</td>
+              </tr>
+              <tr>
+                <td><br />Composed of a fixed number of square pixels.</td>
+                <td>
+                  <br />Created with mathematical equations, lines and curves — using points fixed on a grid.<br /><br />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <br />
+                  Can become distorted if you resize them beyond the amount of space the pixels were meant to fill.<br /><br />
+                </td>
+                <td><br />Can be made infinitely larger (or smaller) without losing resolution and quality.<br /></td>
+              </tr>
+              <tr>
+                <td><br />File types: JPG, GIF, PNG, TIF, BMP and PSD.<br /><br /></td>
+                <td><br />File types: AI, CDR and SVG<br /><br /></td>
+              </tr>
+            </table>
+          </section>
+
+          <section>
+            <h6>What is SVG</h6>
+            <p>SVG refers to Scalable Vector Graphics.</p>
+            <p>It has been developed by the World Wide Web Consortium (W3C) since 1999.</p>
+            <p>There was relatively little support for SVG until 2017. Now SVG widely used for website images.</p>
+            <p>SVGs are used for icons, logos, graphic designs, and fonts.</p>
+          </section>
+
+          <section>
+            <p>
+              A simple SVG document consists of the <code>&lt;svg&gt;</code> root element and several basic shapes that
+              build a graphic together. In addition, there is the <code>&lt;g&gt;</code> element, which is used to group
+              several basic shapes together.
+            </p>
+            <p>
+              Starting from this basic structure, the SVG image can become arbitrarily complex. SVG supports gradients,
+              rotations, filter effects, animations, interactivity with JavaScript and so on.
+            </p>
+          </section>
+          <section>
+            <h6>Most popular apps for editing SVG files</h6>
+            <ul>
+              <li>Any text editor or IDE</li>
+              <li>Inkscape</li>
+              <li>Adobe Illustrator</li>
+              <li>CorelDRAW</li>
+              <li>Sketch</li>
+              <li>etc.</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h6>The benefits of SVG</h6>
+          <ol>
+            <li>Text-based format</li>
+            <li>Scalability</li>
+            <li>High performance</li>
+            <li>Small file size</li>
+            <li>Numerous editing and animating opportunities</li>
+            <li>Integration with HTML, XHTML, and CSS</li>
+            <li>W3C Document Object Model support</li>
+          </ol>
+        </section>
+
+        <section class="display-svg">
+          <h6>Methods to display SVG in the browser</h6>
+          <ol>
+            <li>Can be directly embedded in the XML and HTML.</li>
+            <li>
+              As an <code>img</code> element.
+              <pre><code><img src="image.svg" width="200" height="200" alt="image"></code></pre>
+            </li>
+
+            <li>
+              As an object element.
+              <pre><code><object data="image.svg" type="image/svg+xml"></object></code></pre>
+            </li>
+            <li>
+              As an iframe element.
+              <pre><code><iframe src="image.svg"></iframe></code></pre>
+            </li>
+            <li>
+              As a CSS background-image
+              <pre><code>background-image: url(happy.svg);</code></pre>
+            </li>
+            <li>SVG can be created dynamically with JavaScript and injected into the HTML DOM.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h6>SVG properties</h6>
+          <ul>
+            <li>
+              The <code class="code">width</code> and <code class="code">height</code> property define how much space
+              the image takes up in the browser.
+            </li>
+            <li>
+              The <code class="code">viewBox</code> property defines a coordinate system for the elements inside the
+              image.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h6>Coordinates</h6>
+            <p>For all elements, SVG uses a coordinate system.</p>
+            <p>
+              The top left corner of the document is considered to be the point
+              <code class="code" style="font-size: 28px">(0,0)</code>, or point of origin. Positions are then measured
+              in pixels from the top left corner, with the positive x direction being to the right, and the positive y
+              direction being to the bottom.
+            </p>
+            <img src="./assets/canvas_default_grid.png" alt="" />
+          </section>
+
+          <section>
+            <pre><code data-trim data-line-numbers>
+	<svg width="100" height="100" viewBox="0 0 100 100">
+		&lt;circle cx="50" cy="50" r="25" fill="red" />
+	</svg>
+						</code></pre>
+            <p>
+              The first two numbers of <code class="code">viewBox</code> define which coordinate should be at the top
+              left corner of the image.
+            </p>
+            <p><code class="code">viewBox = "min-x min-y width height"</code></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h6>Basic SVG shapes</h6>
+            <ul>
+              <li>Rectangle: <code class="code">&lt;rect&gt;</code></li>
+              <li>Circle: <code class="code">&lt;circle&gt;</code></li>
+              <li>Ellipse: <code class="code">&lt;ellipse&gt;</code></li>
+              <li>Line: <code class="code">&lt;line&gt;</code></li>
+              <li>Polyline: <code class="code">&lt;polyline&gt;</code></li>
+              <li>Polygon: <code class="code">&lt;polygon&gt;</code></li>
+              <li>Path: <code class="code">&lt;path&gt;</code></li>
+            </ul>
+          </section>
+
+          <section style="font-size: 41px">
+            <h6>Rectangle</h6>
+            <p>The <code class="code">&lt;rect&gt;</code> element draws a rectangle on the screen.</p>
+
+            <pre><code data-trim contenteditable>
+							<!-- Rectangle -->
+							&lt;rect x="60" y="10" rx="10" ry="10" width="30" height="30"/>
+						</code></pre>
+            <br />
+            <b>Attributes:</b>
+            <ul>
+              <li><code class="code">x</code> - the position of the top left corner of the rectangle.</li>
+              <li><code class="code">y</code> - the position of the top left corner of the rectangle.</li>
+              <li><code class="code">width</code> - the width of the rectangle.</li>
+              <li><code class="code">height</code> - the height of the rectangle.</li>
+              <li><code class="code">rx</code> - the x radius of the corners of the rectangle.</li>
+              <li><code class="code">ry</code> - the y radius of the corners of the rectangle.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h6>Circle</h6>
+
+            <p>The <code class="code">&lt;circle&gt;</code> element draws a circle on the screen.</p>
+
+            <pre><code data-trim contenteditable>
+							<!-- Circle -->
+							&lt;circle cx="25" cy="75" r="20"/>
+						</code></pre>
+            <br />
+            <b>Attributes:</b>
+            <ul>
+              <li><code class="code">r</code> - the radius of the circle.</li>
+              <li><code class="code">cx</code> - the x position of the center of the circle.</li>
+              <li><code class="code">cy</code> - the y position of the center of the circle.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h6>Ellipse</h6>
+
+            <p>
+              The <code class="code">&lt;ellipse&gt;</code> element draws a circle, but you can scale the x and y radius
+              separately to get ellipse element.
+            </p>
+
+            <pre><code data-trim contenteditable>
+							<!-- Ellipse -->
+							&lt;ellipse cx="75" cy="75" rx="20" ry="5"/>
+						</code></pre>
+            <br />
+            <b>Attributes:</b>
+            <ul>
+              <li><code class="code">rx</code> - the x radius of the ellipse.</li>
+              <li><code class="code">ry</code> - the y radius of the ellipse.</li>
+              <li><code class="code">cx</code> - the x position of the center of the ellipse.</li>
+              <li><code class="code">cy</code> - the y position of the center of the ellipse.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h6>Line</h6>
+
+            <p>
+              The <code class="code">&lt;line&gt;</code> element takes the positions of two points as parameters and
+              draws a straight line between them.
+            </p>
+
+            <pre><code data-trim>
+							<!-- Line -->
+							&lt;line x1="10" x2="50" y1="110" y2="150" 
+									  stroke="black" stroke-width="5"/>
+						</code></pre>
+            <br />
+            <div><b>Attributes:</b></div>
+            <ul>
+              <li><code class="code">x1</code> - the x position of point 1.</li>
+              <li><code class="code">y1</code> - the y position of point 1.</li>
+              <li><code class="code">x2</code> - the x position of point 2.</li>
+              <li><code class="code">y2</code> - the y position of point 2.</li>
+            </ul>
+          </section>
+
+          <section style="font-size: 40px">
+            <h6>Polyline</h6>
+
+            <p>The <code class="code">&lt;polyline&gt;</code> is a group of connected straight lines.</p>
+
+            <pre><code data-trim>
+							<!-- Polyline -->
+							&lt;polyline points="60, 110 65, 120 70, 115 75, 130 
+							80, 125 85, 140 90, 135 95, 150 100, 145"/>
+						</code></pre>
+            <br />
+            <div><b>Attributes:</b></div>
+            <ul>
+              <li>
+                <code class="code">points</code> - a list of points. Each number must be separated by a space, comma,
+                end of line or a line feed character with additional whitespace permitted. Each point must contain two
+                numbers: an x coordinate and a y coordinate. So, the list
+                <code class="code" style="font-size: 28px">(0,0)</code>,
+                <code class="code" style="font-size: 28px">(1,1)</code>, and
+                <code class="code" style="font-size: 28px">(2,2)</code> could be written as
+                <code class="code" style="font-size: 28px"> 0, 0 1, 1 2, 2</code>.
+              </li>
+            </ul>
+          </section>
+
+          <section style="font-size: 34px">
+            <h6>Polygon</h6>
+
+            <p>
+              The <code class="code">&lt;polyline&gt;</code> is composed of straight line segments connecting a list of
+              points. The path automatically connects the last point with the first, creating a closed shape.
+            </p>
+
+            <pre style="font-size: 22px"><code data-trim>
+							<!-- Polygon -->
+							&lt;polygon points="50, 160 55, 180 70, 180 60, 190 
+							65, 205 50, 195 35, 205 40, 190 30, 180 45, 180"/>
+						</code></pre>
+            <br />
+            <div><b>Attributes:</b></div>
+            <ul>
+              <li>
+                <code class="code">points</code> - a list of points. Each number must be separated by a space, comma,
+                end of line or a line feed character with additional whitespace permitted. Each point must contain two
+                numbers: an <code class="code" style="font-size: 28px">x</code> coordinate and a
+                <code class="code" style="font-size: 28px">y</code> coordinate. The list
+                <code class="code" style="font-size: 28px">(0,0)</code>,
+                <code class="code" style="font-size: 28px">(1,1)</code>, and
+                <code class="code" style="font-size: 28px">(2,2)</code> could be written as
+                <code class="code" style="font-size: 28px"> 0, 0 1, 1 2, 2</code>. The drawing then closes the path, so
+                a final straight line would be drawn from <code class="code" style="font-size: 28px">(2,2)</code> to
+                <code class="code" style="font-size: 28px">(0,0)</code>.
+              </li>
+            </ul>
+          </section>
+
+          <section style="font-size: 35px">
+            <h6>Path</h6>
+            <p>
+              The <code class="code">&lt;path&gt;</code> is an element, that allows to draw rectangles (with or without
+              rounded corners), circles, ellipses, polylines and polygons.
+            </p>
+
+            <pre style="font-size: 22px"><code data-trim data-highlighted="">
+							<!-- Curve line with path -->
+							&lt;path d="M20,230 Q40,205 50,230 T90,230" fill="none" 
+							stroke="blue" stroke-width="5"/>
+						</code></pre>
+
+            <br />
+            <div><b>Attributes:</b></div>
+            <ul>
+              <li><code class="code">d</code> - a list of points and other information about how to draw the path.</li>
+            </ul>
+          </section>
+          <section style="font-size: 35px">
+            <h6>Path</h6>
+            <pre style="font-size: 22px"><code data-trim data-highlighted="">
+							<!-- Rectangle made by path -->
+							<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+								&lt;path d="M 10 10 H 90 V 90 H 10 L 10 10"/>							
+							</svg>
+						</code></pre>
+            <div><b>Line commands:</b></div>
+            <ul>
+              <li>
+                <code class="code">M</code> - "Move To". It takes two parameters, a coordinate
+                <code class="code" style="font-size: 28px">(x)</code> and coordinate
+                <code class="code" style="font-size: 28px">(y)</code> to move to. The "Move To" command appears at the
+                beginning of paths to specify where the drawing should start.
+              </li>
+              <li>
+                <code class="code">L</code> - "Line To". It takes two parameters (x and y coordinates) and draws a line
+                from the current position to a new position.
+              </li>
+              <li><code class="code">H</code> - draws a horizontal line. This command takes one parameter.</li>
+              <li><code class="code">V</code> - draws a vertical line. This command takes one parameter.</li>
+              <li>
+                <code class="code">Z</code> - "Close Path". This command draws a straight line from the current position
+                back to the first point of the path.
+              </li>
+            </ul>
+          </section>
+          <section style="font-size: 35px">
+            <h6>Path</h6>
+            <p><b>Relative commands</b></p>
+            <pre style="font-size: 22px"><code data-trim data-highlighted="">
+							<!-- Rectangle made by path with relative commands -->
+							<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+								&lt;path d="M 10 10 h 80 v 80 h -80 Z" fill="white" 
+								stroke="red"/>						
+							</svg>
+						</code></pre>
+            <p>
+              Relative commands are called by using lowercase letters, and rather than moving the cursor to an exact
+              coordinate, they move it relative to its last position.
+            </p>
+            <p>
+              The path will move to point <code class="code" style="font-size: 28px">(10, 10)</code> and then move
+              horizontally 80 points to the right, then 80 points down, then 80 points to the left, and then back to the
+              start.
+            </p>
+          </section>
+        </section>
+        <section>
+          <section style="font-size: 35px">
+            <h6>Bézier Curves</h6>
+            <p><b>Cubic curve</b></p>
+            <p>
+              <code class="code">C</code> - the cubic curve. It takes in two control points for each point. To create a
+              cubic Bézier, three sets of coordinates need to be specified
+              <code class="code" style="font-size: 28px">(C x1 y1, x2 y2, x y)</code>.
+            </p>
+            <p>
+              The last set of coordinates here <code class="code" style="font-size: 28px">(x, y)</code> specify where
+              the line should end. The other two are control points. The control points essentially describe the slope
+              of the line starting at each point.
+            </p>
+            <p>
+              The Bézier function then creates a smooth curve that transfers from the slope established at the beginning
+              of the line, to the slope at the other end. Several Bézier curves can be strung together to create
+              extended, smooth shapes.
+            </p>
+          </section>
+
+          <section style="font-size: 35px">
+            <h6>Bézier Curves</h6>
+            <p><b>Cubic curve examples</b></p>
+            <img src="./assets/cubic_bézier_curves_with_grid.png" alt="" />
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Cubic curve examples -->
+							<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+								<path d="M 10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+								<path d="M 70 10 C 70 20, 110 20, 110 10" stroke="black" fill="transparent"/>
+								<path d="M 130 10 C 120 20, 180 20, 170 10" stroke="black" fill="transparent"/>
+								<path d="M 10 60 C 20 80, 40 80, 50 60" stroke="black" fill="transparent"/>
+								<path d="M 70 60 C 70 80, 110 80, 110 60" stroke="black" fill="transparent"/>
+								<path d="M 130 60 C 120 80, 180 80, 170 60" stroke="black" fill="transparent"/>
+								<path d="M 10 110 C 20 140, 40 140, 50 110" stroke="black" fill="transparent"/>
+								<path d="M 70 110 C 70 140, 110 140, 110 110" stroke="black" fill="transparent"/>
+								<path d="M 130 110 C 120 140, 180 140, 170 110" stroke="black" fill="transparent"/>
+							</svg>
+						</code></pre>
+          </section>
+          <section style="font-size: 35px">
+            <h6>Bézier Curves</h6>
+            <p><b>Quadratic curve</b></p>
+            <img src="./assets/quadratic_bézier_with_grid.png" alt="" />
+            <p>
+              <code class="code">Q</code> - the quadratic curve. It requires one control point which determines the
+              slope of the curve at both the start point and the end point. It takes two parameters: the control point
+              and the end point of the curve <code class="code" style="font-size: 28px">(Q x1 y1, x y)</code>.
+            </p>
+
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Quadratic curve example -->
+							<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+								<path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent"/>
+							</svg>
+						</code></pre>
+          </section>
+          <section style="font-size: 35px">
+            <h6>Arcs</h6>
+            <p><code class="code">A</code> - the arc. Arcs are sections of circles or ellipses.</p>
+            <p>
+              <code class="code" style="font-size: 28px">A rx ry x-axis-rotation large-arc-flag sweep-flag x y</code>
+              <br />
+              At its start, the arc element takes in two parameters for the x-radius and y-radius. The final two
+              parameters designate the x and y coordinates to end the stroke. Together, these four values define the
+              basic structure of the arc. The third parameter describes the rotation of the arc.
+            </p>
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Quadratic curve example -->
+							<svg width="190" height="160" xmlns="http://www.w3.org/2000/svg">
+								<path d="M 10 80 Q 95 10 180 80" stroke="black" fill="transparent"/>
+							</svg>
+						</code></pre>
+          </section>
+          <section>
+            <h6>Acrs examples</h6>
+            <img src="./assets/svgarcs_xaxisrotation_with_grid.png" alt="" />
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Acrs examples -->
+							<svg width="320" height="320" xmlns="http://www.w3.org/2000/svg">
+								<path d="M 10 315
+												 L 110 215
+												 A 30 50 0 0 1 162.55 162.45
+												 L 172.55 152.45
+												 A 30 50 -45 0 1 215.1 109.9
+												 L 315 10" stroke="black" 
+												 fill="green" 
+												 stroke-width="2" 
+												 fill-opacity="0.5"/>
+							</svg>
+						</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h6>Style SVG</h6>
+            <p><b>Attributes:</b></p>
+            <ul>
+              <li><code class="code">fill</code> sets the color inside the object.</li>
+              <li><code class="code">stroke</code> sets the color of the line drawn around the object.</li>
+              <li><code class="code">fill-opacity</code> sets the fill opacity.</li>
+              <li><code class="code">stroke-opacity</code> sets the stroke opacity.</li>
+            </ul>
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Style SVG -->
+							&lt;rect x="10" y="10" width="100" height="100" 
+							stroke="blue" fill="purple" fill-opacity="0.5" stroke-opacity="0.8"/>
+						</code></pre>
+          </section>
+
+          <section style="font-size: 30px">
+            <h6>CSS styles</h6>
+
+            <p>It's possible to add CSS styles to the SVG using the inline style attribute.</p>
+            <pre style="font-size: 18px"><code data-trim data-highlighted="">
+						<!-- Inline CSS -->
+						<svg xmlns="http://www.w3.org/2000/svg" 
+							 width="64" height="64" 
+							 viewBox="0 0 48 48">
+							<g>
+								&lt;rect width="100%" height="8" style="fill: navy; 
+						 transform: translateY(calc(50% - 4px))" />
+								&lt;rect width="100%" height="8" style="fill: blue; transform-origin: center;
+								transform: rotate(90deg) translateY(calc(50% - 4px));" />
+							</g>
+						</svg>
+					</code></pre>
+            <p>It's available to use the CSS @import rule.</p>
+            <pre style="font-size: 18px"><code data-trim data-highlighted="">
+						<!-- Import CSS -->
+						<svg xmlns="http://www.w3.org/2000/svg">
+							<style>
+								@import url(style.css);
+							</style>
+						</svg>
+					</code></pre>
+            <p>
+              It's possible to write styles for SVG files in an external CSS file consumed in the documents that include
+              these SVG files.
+            </p>
+          </section>
+        </section>
+        <section>
+          <h6>Transformation</h6>
+          <ul>
+            <li><code class="code">translate()</code> - to move an element around.</li>
+            <li><code class="code">rotate()</code> - to rotate an element.</li>
+            <pre style="font-size: 20px"><code data-trim data-highlighted="">
+							<!-- Transform SVG -->
+							<svg width="40" height="50" style="background-color:#bff;">
+								&lt;rect x="0" y="0" width="10"
+								height="10" transform="translate(30,40) rotate(45)" />
+							</svg>
+						</code></pre>
+            <li>
+              <code class="code">skewX()</code> and <code class="code">skewY()</code> - to make a rhombus out of a
+              rectangle. Each one takes an angle that determines how far the element will be skewed.
+            </li>
+            <li><code class="code">scale()</code> - to change the size of an element.</li>
+          </ul>
+        </section>
+
+        <section>
+          <section><h6>Animation</h6></section>
+          <section>
+            <h6>Ways to animate SVG</h6>
+            <ul>
+              <li>SMIL, which is the native SVG animation specification</li>
+              <li>
+                Web Animations API, which is a native JavaScript API allowing you to create more complex sequential
+                animations without loading any external scripts
+              </li>
+              <li>WebGL</li>
+              <li>CSS animation</li>
+            </ul>
+          </section>
+        </section>
+
+        <section style="font-size: 32px">
+          <h6>Animating with SMIL</h6>
+          <p>There is a syntax for animations built right into SVG.</p>
+          <pre style="font-size: 22px"><code data-trim data-highlighted="">
+						<!-- SMIL animation -->
+						<svg viewBox="0 0 127.9 178.4">
+							<path d="M37.6,138.8c0 ... ">
+								&lt;animate attributeName="fill" dur="5000ms" to="#f06d06" 
+								fill="freeze" />  
+							</path>
+						</svg>
+					</code></pre>
+          <div><b>You might choose animating this way if…</b></div>
+          <ul>
+            <li>You need to animate properties that CSS can’t, like the shape itself.</li>
+            <li>
+              You need other SMIL specific features, like beginning an animation when another ends without manually
+              syncing durations/delays. Or interaction stuff, like beginning an animation on a click.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section style="font-size: 30px">
+            <h6>Animating with CSS @keyframes</h6>
+            <p>SVG elements can be targeted and styled with CSS. You can apply animation through @keyframes.</p>
+            <pre style="font-size: 18px"><code data-trim data-highlighted="">
+							<!-- SVG -->
+							<svg viewBox="0 0 127.9 178.4">
+								&lt;path id="left-leg" d="M37.6,138.8c0 ... " />
+							</svg>
+						</code></pre>
+
+            <pre style="font-size: 18px"><code data-trim>
+							.left-leg {
+								fill: orange;
+								animation: dance 2s infinite alternate;
+							}
+
+							@keyframes dance {
+								100% {
+									transform: rotate(3deg);
+								}
+							}
+						</code></pre>
+            <div><b>When to use:</b></div>
+            <ul>
+              <li>The animation is fairly simple.</li>
+              <li>You only need to animate properties that CSS can animate.</li>
+              <li>You already know and are comfortable with CSS animations.</li>
+            </ul>
+          </section>
+        </section>
+
+        <section style="font-size: 30px">
+          <h6>Animating with JavaScript</h6>
+          <p>
+            Animating SVG elements with JavaScript can be much like animating DOM elements. With JavaScript, you have
+            access to things like requestAnimationFrame (or other loops), so you can animate just by way of rapidly
+            changing property values.
+          </p>
+          <div><b>You might choose animating this way if…</b></div>
+
+          <ul>
+            <li>
+              You’re working in JavaScript anyway, perhaps your animation has to do with data you receive with JSON or
+              the like.
+            </li>
+            <li>
+              You need JavaScript anyway, because you need the logic or math or something else really only possible
+              there.
+            </li>
+            <li>You’re interested in the JavaScript solving some bugs for you.</li>
+            <li>
+              The scope of your animation is rather large/complicated and you need the abstraction and organization
+              JavaScript can provide.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h6>Browser Support</h6>
+          <p>
+            Browser support for SVG is available in all modern browsers. There are some issues with scaling in IE 9
+            through IE 11 however they can be overcome with the use of the width, height, viewbox, and CSS.
+          </p>
+        </section>
+
+        <section>
+          <p>Thank you for watching</p>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

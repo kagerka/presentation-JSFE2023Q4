@@ -1,0 +1,25 @@
+.graphic-types {
+  font-size: x-large;
+
+}
+
+.graphic-types-header {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+td {
+  border-right: 1px solid white;
+}
+
+td:last-of-type {
+  border-right: none;
+}
+
+.display-svg {
+  font-size: xx-large;
+}
+
+.code {
+  color: rgb(241, 225, 134);
+}
